@@ -1,0 +1,30 @@
+{
+  "suggest.labelMaxLength": 60,
+  "suggest.completionItemKindLabels":{
+    "class": "\uf0e8",
+    "color": "\ue22b"
+  },
+  "cmake.formatter": "cmake-format",
+  "languageserver":{
+    "ccls":{ 
+      "command": "ccls",
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/", ".vscode"],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
+    },
+    "cmake": {
+      "command": "cmake-language-server",
+      "filetypes": ["cmake"],
+      "rootPatterns": [
+        "build/"
+      ],
+      "initializationOptions": {
+          "buildDirectory": "build"
+      }
+    } 
+  }
+}
