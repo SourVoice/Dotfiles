@@ -106,7 +106,6 @@ if empty(glob('~/.vim/bundle/Vundle.vim'))
 endif 
 
 
-
 " =============
 " PluginBegin
 " =============
@@ -151,11 +150,14 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
+"auto complete pairs
 Plugin 'jiangmiao/auto-pairs'
 
 "Plugin 'Valloric/Youcompleteme'
 
+" lsp and completion
 Plugin 'neoclide/coc.nvim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -217,6 +219,16 @@ Plugin 'wakatime/vim-wakatime'
 " 跳转到定义处
 "inoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> 
 
+
+
+" ======NERDTree======
+
+" show hidden file
+let NERDTreeShowHidden=1
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
 
 " ======vim-lsp-cxx-highlight======
 
