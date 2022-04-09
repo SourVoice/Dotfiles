@@ -290,6 +290,13 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 		\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"  
 
 
+" diagnostic info and navigation
+nnoremap <silent><nowait> <leader>d: CocList diagnostic<CR>
+nmap <silent> <leader>- <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>= <Plug>(coc-diagnostic-next)
+nmap <leader>qf <Plug>(coc-fix-current)
+
+
 " Goto code navigation.
 nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gy <Plug>(coc-type-definition)
@@ -314,5 +321,18 @@ nmap <leader>rn <Plug>(coc-rename)
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+
+" a function to generate compile command to .vscode
+function! s:generate_compile_commands()
+	if empty(glob('CMakeLists.txt'))
+		echo "Can't find CMakeLists.txt"
+		return 
+	endif
+	execute '!cmake -DCMAKE_BUILD_TYPE=debug
+				\ -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -S . -B .vscode'
+endfunction
+command! -nargs=0 Gcmake :call s:generate_compile_commands()
+
 
 
