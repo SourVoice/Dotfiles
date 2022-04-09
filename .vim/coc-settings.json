@@ -11,9 +11,23 @@
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
       "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/", ".vscode"],
       "initializationOptions": {
+		"highlight": {"isRanges": true},
         "cache": {
           "directory": "/tmp/ccls"
-        }
+        },
+		"clang": {
+			"resourceDir": "/usr/lib/clang/10.0.0"
+		},
+		"completion": {
+			"detailedLable": true,
+			"placeholer": true
+		},
+		"index": {
+			"onChange": false,
+			"initialNoLinkage": true,
+			"threads": 2
+		},
+		"compilationDatabaseDirectory": ".vscode/"
       }
     },
     "cmake": {

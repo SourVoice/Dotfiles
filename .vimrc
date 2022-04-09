@@ -43,7 +43,7 @@ set gdefault
 
 " Status Bar
 set laststatus=2
-set statusline=
+" set statusline=
 set statusline+=%#PmenuSel#
 set statusline+=%{StatuslineGit()}
 set statusline+=%#LineNr#
@@ -56,7 +56,7 @@ set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
 set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%                  " Percentage
 set statusline+=\ %l:%c                 " Line number: Column relative
-set statusline+=\
+" set statusline+=\
 
 
 function! GitBranch()
@@ -76,7 +76,9 @@ nmap <leader>h :vertical res-5<CR>
 nmap <leader>l :vertical res+5<CR>
 
 " Open file remember history status
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal g'\"" | endif
+if has("autocmd")
+	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
 
 " =============
@@ -123,7 +125,14 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" use git in vim
 Plugin 'tpope/vim-fugitive'
+
+" file explore
+Plugin 'preservim/nerdtree'
+
+" highlight
+Plugin 'jackguo380/vim-lsp-cxx-highlight'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
@@ -208,47 +217,65 @@ Plugin 'wakatime/vim-wakatime'
 " 跳转到定义处
 "inoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> 
 
-    
+
+" ======vim-lsp-cxx-highlight======
+
+
+hi default link LspCxxHlSymFunction cxxFunction
+hi default link LspCxxHlSymFunctionParameter cxxParameter
+hi default link LspCxxHlSymFileVariableStatic cxxFileVariableStatic
+hi default link LspCxxHlSymStruct cxxStruct
+hi default link LspCxxHlSymStructField cxxStructField
+hi default link LspCxxHlSymFileTypeAlias cxxTypeAlias
+hi default link LspCxxHlSymClassField cxxStructField
+hi default link LspCxxHlSymEnum cxxEnum
+hi default link LspCxxHlSymVariableExtern cxxFileVariableStatic
+hi default link LspCxxHlSymVariable cxxVariable
+hi default link LspCxxHlSymMacro cxxMacro
+hi default link LspCxxHlSymEnumMember cxxEnumMember
+hi default link LspCxxHlSymParameter cxxParameter
+hi default link LspCxxHlSymParameter cxxTypeAlias
+
 
 " ======Coc.nvimSet=======
 
 
 " Coc extensions
 let g:coc_global_extensions = [
-	\ 'coc-vimlsp',
-	\ 'coc-cmake',
-	\ 'coc-pyright',
-	\ 'coc-json'
-	\]
-    
+\ 'coc-vimlsp',
+\ 'coc-cmake',
+\ 'coc-pyright',
+\ 'coc-json'
+\]
+
 
 " Trigger negiative
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap  <silent><expr><TAB>
-	\ pumvisible() ? "\<C-n>":
-	\ <SID>check_back_space() ? "\<TAB>":
-	\ coc#refersh()
+\ pumvisible() ? "\<C-n>":
+\ <SID>check_back_space() ? "\<TAB>":
+\ coc#refersh()
 inoremap  <expr><S-TAB> 
-	\ pumvisible() ? "\<C-p>" : "\<C-h>"
+\ pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline(',')[col-1] =~# '\s'
+let col = col('.') - 1
+return !col || getline(',')[col-1] =~# '\s'
 endfunction
 
 
 " Trigger completion
 if has('nvim')
-	inoremap <silent><expr> <c-space> coc#refersh()
+inoremap <silent><expr> <c-space> coc#refersh()
 else 
-	inoremap <silent><expr> <c-@> coc#refersh()
+inoremap <silent><expr> <c-@> coc#refersh()
 endif
 
 
 " Use <CR> auto select the first completion item
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-			\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"  
+		\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"  
 
 
 " Goto code navigation.
@@ -274,6 +301,6 @@ nmap <leader>rn <Plug>(coc-rename)
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 
