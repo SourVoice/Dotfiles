@@ -9,7 +9,7 @@
     "ccls":{ 
       "command": "ccls",
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
-      "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/", ".vscode"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/", ".vscode/"],
       "initializationOptions": {
 		"highlight": {"isRanges": true},
         "cache": {
@@ -27,7 +27,7 @@
 			"initialNoLinkage": true,
 			"threads": 2
 		},
-		"compilationDatabaseDirectory": ".vscode/"
+		"compilationDatabaseDirectory": "./.vscode/"
       }
     },
     "cmake": {
@@ -39,6 +39,12 @@
       "initializationOptions": {
           "buildDirectory": "build"
       }
-    } 
+    },
+	"bash": {
+		"command": "bash-language-server",
+		"args": ["start"],
+		"filetypes": [".sh"],
+		"ignoredRootPaths": ["~"]
+	}
   }
 }

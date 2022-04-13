@@ -9,7 +9,7 @@ set number
 " Show line number on the current line and relative numbers on all other lines.
 set relativenumber
 " will not carrage return when line within symbol below
-set iskeyword+=_,$,@,%,#,-
+set iskeyword+=_,$,@,%,#,-,/
 
 
 " shift and tab setting
@@ -19,7 +19,7 @@ set softtabstop=4
 set noexpandtab
 
 " Enable mouse support
-set mouse+=a
+set mouse=a
 " Disable noerrorbells
 set noerrorbells visualbell t_vb=
 " Highlight the line currently under cursor.
@@ -42,6 +42,9 @@ set smartcase
 set gdefault
 
 " Status Bar
+" hi statusline guifg=Blue ctermfg=8 guifg=Blue ctermbg=15
+
+
 set laststatus=2
 " set statusline=
 set statusline+=%#PmenuSel#
@@ -158,6 +161,11 @@ Plugin 'jiangmiao/auto-pairs'
 " lsp and completion
 Plugin 'neoclide/coc.nvim'
 
+" statusline profile
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -255,6 +263,7 @@ hi default link LspCxxHlSymParameter cxxTypeAlias
 " Coc extensions
 let g:coc_global_extensions = [
 \ 'coc-vimlsp',
+\ 'coc-sh',
 \ 'coc-cmake',
 \ 'coc-pyright',
 \ 'coc-json'
@@ -304,6 +313,17 @@ nmap <silent>gi <Plug>(coc-implementation)
 nmap <silent>gr <Plug>(coc-references)
 
 
+" scroll float window/popips
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+	nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+	nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+	inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ?  "\<C-r>=coc#float#scroll(1)\<CR>" : "\<Right>"
+	inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ?  "\<C-r>=coc#float#scroll(0)\<CR>" : "\<Left>"
+	vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1)
+	vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0)
+endif
+
+
 " Highlight the symbol and its references when holding the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -334,5 +354,11 @@ function! s:generate_compile_commands()
 endfunction
 command! -nargs=0 Gcmake :call s:generate_compile_commands()
 
+
+" ======vim-airline=======
+
+
+let g:airline_section_z="%p%%\%#CursorColumn#"
+let g:airline_theme='simple'
 
 
