@@ -1,5 +1,3 @@
-
-" =============
 " BasicSetting
 " =============
   
@@ -10,7 +8,6 @@ set number
 set relativenumber
 " will not carrage return when line within symbol below
 set iskeyword+=_,$,@,%,#,-,/
-
 
 " shift and tab setting
 set tabstop=4
@@ -26,14 +23,14 @@ set noerrorbells visualbell t_vb=
 set cursorline
 " enable hightlight searching
 set hlsearch
-"  see ":help leader" for more information.
+" See ":help leader" for more information.
 let mapleader = ","
 
 set encoding=utf-8
 set hidden
 set nobackup
 set nowritebackup
-set cmdheight=2
+" set cmdheight=2
 
 " Proper Search
 set incsearch
@@ -43,22 +40,20 @@ set gdefault
 
 " Status Bar
 " hi statusline guifg=Blue ctermfg=8 guifg=Blue ctermbg=15
-
-
 set laststatus=2
 " set statusline=
-set statusline+=%#PmenuSel#
-set statusline+=%{StatuslineGit()}
-set statusline+=%#LineNr#
-set statusline+=\ %f
-set statusline+=%m\
-set statusline+=%=
-set statusline+=%#CursorColumn#
-set statusline+=\ %y                    " Filetype
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-set statusline+=\[%{&fileformat}\]
-set statusline+=\ %p%%                  " Percentage
-set statusline+=\ %l:%c                 " Line number: Column relative
+" set statusline+=%#PmenuSel#
+" set statusline+=%{StatuslineGit()}
+" set statusline+=%#LineNr#
+" set statusline+=\ %f
+" set statusline+=%m\
+" set statusline+=%=
+" set statusline+=%#CursorColumn#
+" set statusline+=\ %y                    " Filetype
+" set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+" set statusline+=\[%{&fileformat}\]
+" set statusline+=\ %p%%                  " Percentage
+" set statusline+=\ %l:%c                 " Line number: Column relative
 " set statusline+=\
 
 
@@ -72,11 +67,16 @@ function! StatuslineGit()
 endfunction
 
 
-" Resize split screen
-nmap <leader>k :res +5<CR>
-nmap <leader>j :res -5<CR>
-nmap <leader>h :vertical res-5<CR>
-nmap <leader>l :vertical res+5<CR>
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+"if has("nvim-0.5.0") || has("patch-8.1.1564")
+"  " Recently vim can merge signcolumn and number column into one
+"  set signcolumn=number
+"else
+"  set signcolumn=yes:1
+"endif
+set signcolumn=yes
+
 
 " Open file remember history status
 if has("autocmd")
@@ -97,6 +97,49 @@ vnoremap <C-[> <esc>
 snoremap <C-[> <esc>
 xnoremap <C-[> <esc>
 onoremap <C-[> <esc>
+
+" ========================Window Managemnt=========================
+
+" Navigate window
+nnoremap <silent> <space>h <C-w>h
+nnoremap <silent> <space>l <C-w>l
+nnoremap <silent> <space>j <C-w>j
+nnoremap <silent> <space>k <C-w>k
+
+" Resize split screen
+nmap <leader>k :res +5<CR>
+nmap <leader>j :res -5<CR>
+nmap <leader>h :vertical res-5<CR>
+nmap <leader>l :vertical res+5<CR>
+
+" split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
+noremap <leader>u :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
+noremap <leader>o :set splitbelow<CR>:split<CR>
+noremap <leader>p :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
+noremap <leader>i :set splitright<CR>:vsplit<CR>
+
+
+" ========================Tab Managemnt=========================
+
+" Open a NewTab with tu
+noremap tu :tabnew<CR>
+noremap tU :tab split<CR>
+" Move around tabs with tn and tp
+noremap tn :+tabnext<CR>
+noremap tp :-tabnext<CR>
+" Move the tabs with tmn and tmp
+noremap tmn :+tabmove<CR>
+noremap tmp :-tabmove<CR>
+" Close current tab
+noremap tc <C-w>c
+
+
+" ========================Cursor support=========================
+
+
+noremap <silent> E 5j
+noremap <silent> W 5k
+
 
 " =============
 " PluginManager
@@ -130,6 +173,9 @@ Plugin 'VundleVim/Vundle.vim'
 " use git in vim
 Plugin 'tpope/vim-fugitive'
 
+" git diff in vim
+Plugin 'airblade/vim-gitgutter'
+
 " file explore
 Plugin 'preservim/nerdtree'
 
@@ -138,12 +184,6 @@ Plugin 'jackguo380/vim-lsp-cxx-highlight'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
-
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
 
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
@@ -165,6 +205,8 @@ Plugin 'neoclide/coc.nvim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
+" static
+Plugin 'wakatime/vim-wakatime'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -180,7 +222,6 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-Plugin 'wakatime/vim-wakatime'
 
 
 
@@ -228,8 +269,8 @@ Plugin 'wakatime/vim-wakatime'
 "inoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> 
 
 
-
 " ======NERDTree======
+
 
 " show hidden file
 let NERDTreeShowHidden=1
@@ -238,7 +279,8 @@ nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
-" ======vim-lsp-cxx-highlight======
+
+" ====== vim-lsp-cxx-highlight======
 
 
 hi default link LspCxxHlSymFunction cxxFunction
@@ -266,7 +308,8 @@ let g:coc_global_extensions = [
 \ 'coc-sh',
 \ 'coc-cmake',
 \ 'coc-pyright',
-\ 'coc-json'
+\ 'coc-json',
+\ 'coc-prettier'
 \]
 
 
@@ -274,23 +317,23 @@ let g:coc_global_extensions = [
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap  <silent><expr><TAB>
-\ pumvisible() ? "\<C-n>":
-\ <SID>check_back_space() ? "\<TAB>":
-\ coc#refersh()
+			\ pumvisible() ? "\<C-n>":
+			\ <SID>check_back_space() ? "\<TAB>":
+			\ coc#refersh()
 inoremap  <expr><S-TAB> 
-\ pumvisible() ? "\<C-p>" : "\<C-h>"
+			\ pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-let col = col('.') - 1
-return !col || getline(',')[col-1] =~# '\s'
+	let col = col('.') - 1
+	return !col || getline(',')[col-1] =~# '\s'
 endfunction
 
 
 " Trigger completion
 if has('nvim')
-inoremap <silent><expr> <c-space> coc#refersh()
+	inoremap <silent><expr> <c-o> coc#refersh()
 else 
-inoremap <silent><expr> <c-@> coc#refersh()
+	inoremap <silent><expr> <c-@> coc#refersh()
 endif
 
 
@@ -299,8 +342,8 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 		\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"  
 
 
-" diagnostic info and navigation
-nnoremap <silent><nowait> <leader>d: CocList diagnostic<CR>
+" Diagnostic info and navigation
+nnoremap <silent><nowait> <leader>d :CocList diagnostic<CR>
 nmap <silent> <leader>- <Plug>(coc-diagnostic-prev)
 nmap <silent> <leader>= <Plug>(coc-diagnostic-next)
 nmap <leader>qf <Plug>(coc-fix-current)
@@ -313,11 +356,23 @@ nmap <silent>gi <Plug>(coc-implementation)
 nmap <silent>gr <Plug>(coc-references)
 
 
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function s:show_documentation()
+   if CocAction('hasProvider', 'hover')
+	   call CocActionAsync('doHover')
+   else
+	   call feedkeys('K', 'in')
+	endif
+endfunction
+
+
 " scroll float window/popips
 if has('nvim-0.4.0') || has('patch-8.2.0750')
 	nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-	nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-	inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ?  "\<C-r>=coc#float#scroll(1)\<CR>" : "\<Right>"
+	nnoremap <silent><nowait><expr> <c-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<c-b>"
+	inoremap <silent><nowait><expr> <c-f> coc#float#has_scroll() ?  "\<c-r>=coc#float#scroll(1)\<cr>" : "\<right>"
 	inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ?  "\<C-r>=coc#float#scroll(0)\<CR>" : "\<Left>"
 	vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1)
 	vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0)
@@ -340,7 +395,42 @@ nmap <leader>rn <Plug>(coc-rename)
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+
+" Setup Prettier command 
+command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand','editor.action.organizeImport')"
+
+
+" ==========================Mappings for CoCList===========================
+" Open CocList
+nnoremap <silent> <space>g :<C-u>CocList --normal gstatus<CR>
+
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>d  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>n  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>p  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>r  :<C-u>CocListResume<CR>
 
 
 " a function to generate compile command to .vscode
@@ -358,7 +448,54 @@ command! -nargs=0 Gcmake :call s:generate_compile_commands()
 " ======vim-airline=======
 
 
-let g:airline_section_z="%p%%\%#CursorColumn#"
-let g:airline_theme='simple'
+let g:airline_section_z="%p%%"
+let g:airline_theme='angr'
+
+let g:airline#extensions#coc#enabled = 0
+let airline#extensions#coc#error_symbol = 'Error:'
+let airline#extensions#coc#warning_symbol = 'Warning:'
+let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+
+
+" ====================GitGutter====================
+
+" let g:gitgutter_signs = 1
+let g:gitgutter_sign_allow_clobber = 1
+let g:gitgutter_map_keys = 0
+let g:gitgutter_override_sign_column_highlight = 0
+let g:gitgutter_preview_win_floating = 1
+let g:gitgutter_sign_added = '▎'
+let g:gitgutter_sign_modified = '░'
+let g:gitgutter_sign_removed = '▏'
+let g:gitgutter_sign_removed_first_line = '▔'
+let g:gitgutter_sign_modified_removed = '▒'
+nnoremap <leader>gf :GitGutterFold<CR>
+nnoremap <leader>gd :GitGutterPreviewHunk<CR>
+nnoremap <leader>g- :GitGutterPrevHunk<CR>
+nnoremap <leader>g= :GitGutterNextHunk<CR>
+
+
+" ====================vim-fugitive=====================
+ 
+" To learn more see:
+" :h fugitive
+" :h :Git
+" :h :Gw
+" :h :Git commit
+" :h :windo
+" :h :x
+" to add file: 
+"     in command line :Git
+"     then use '-' to add or remove file
+"     Start committing via cc whilst in the status window
+"
+" Or use a more easy way:
+" :windo Gw
+" :Git commit
+
+
+
+
 
 

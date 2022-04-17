@@ -39,8 +39,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-   	xterm-color) color_prompt=yes;;
-	rxvt-color) color_prompt=yes;;
+   	xterm-color*) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -64,7 +63,7 @@ fi
 # copy from https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh ~/
 # or " find / -name 'git-prompt.sh'  -type f -print -quit 2>/dev/null "
 if [ "$color_prompt" = yes ]; then
-		export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00;32m\]$(__git_ps1 " (%s)")\[\033[00m\]\$ ' 
+		PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00;32m\]$(__git_ps1 " (%s)")\[\033[00m\]\$ ' 
 else
 		export PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -100,7 +99,7 @@ fi
 alias ll='ls -alF --color=auto'
 alias la='ls -A --color=auto'
 alias l='ls -CF'
-alias py=python3
+alias py='python3'
 alias gs='git status'
 
 
