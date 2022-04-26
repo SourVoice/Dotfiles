@@ -1,3 +1,4 @@
+" =============
 " BasicSetting
 " =============
   
@@ -39,7 +40,22 @@ set smartcase
 set gdefault
 
 " Status Bar
+" default the statusline to green when entering Vim
 " hi statusline guifg=Blue ctermfg=8 guifg=Blue ctermbg=15
+function! InsertStatuslineColor(mode)
+  if a:mode == 'i'
+    hi statusline guibg=Cyan ctermfg=6 guifg=Black ctermbg=0
+  elseif a:mode == 'r'
+    hi statusline guibg=Purple ctermfg=5 guifg=Black ctermbg=0
+  else
+    hi statusline guibg=DarkRed ctermfg=1 guifg=Black ctermbg=0
+  endif
+endfunction
+
+au InsertEnter * call InsertStatuslineColor(v:insertmode)
+au InsertLeave * hi statusline guibg=Blue ctermfg=8 guifg=White ctermbg=15
+
+
 set laststatus=2
 " set statusline=
 " set statusline+=%#PmenuSel#
@@ -107,10 +123,10 @@ nnoremap <silent> <space>j <C-w>j
 nnoremap <silent> <space>k <C-w>k
 
 " Resize split screen
-nmap <leader>k :res +5<CR>
-nmap <leader>j :res -5<CR>
-nmap <leader>h :vertical res-5<CR>
-nmap <leader>l :vertical res+5<CR>
+nmap <leader>j :res +5<CR>
+nmap <leader>k :res -5<CR>
+nmap <leader>l :vertical res-5<CR>
+nmap <leader>h :vertical res+5<CR>
 
 " split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
 noremap <leader>u :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
@@ -139,6 +155,13 @@ noremap tc <C-w>c
 
 noremap <silent> E 5j
 noremap <silent> W 5k
+" B/J keys for 5 times b/w (faster navigation)
+noremap <silent> B 5b
+noremap <silent> J 5w
+" N key: go to the start of the line
+noremap <silent> N 0
+" I key: go to the end of the line
+noremap <silent> I $
 
 
 " =============
@@ -493,9 +516,6 @@ nnoremap <leader>g= :GitGutterNextHunk<CR>
 " Or use a more easy way:
 " :windo Gw
 " :Git commit
-
-
-
 
 
 
