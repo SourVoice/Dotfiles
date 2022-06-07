@@ -159,9 +159,9 @@ noremap <silent> W 5k
 noremap <silent> B 5b
 noremap <silent> J 5w
 " N key: go to the start of the line
-noremap <silent> N 0
+" noremap <silent> N 0
 " I key: go to the end of the line
-noremap <silent> I $
+noremap <silent><nowait> <space>I $
 
 
 " =============
@@ -306,20 +306,20 @@ nnoremap <C-f> :NERDTreeFind<CR>
 " ====== vim-lsp-cxx-highlight======
 
 
-hi default link LspCxxHlSymFunction cxxFunction
-hi default link LspCxxHlSymFunctionParameter cxxParameter
-hi default link LspCxxHlSymFileVariableStatic cxxFileVariableStatic
-hi default link LspCxxHlSymStruct cxxStruct
-hi default link LspCxxHlSymStructField cxxStructField
-hi default link LspCxxHlSymFileTypeAlias cxxTypeAlias
-hi default link LspCxxHlSymClassField cxxStructField
-hi default link LspCxxHlSymEnum cxxEnum
-hi default link LspCxxHlSymVariableExtern cxxFileVariableStatic
-hi default link LspCxxHlSymVariable cxxVariable
-hi default link LspCxxHlSymMacro cxxMacro
-hi default link LspCxxHlSymEnumMember cxxEnumMember
-hi default link LspCxxHlSymParameter cxxParameter
-hi default link LspCxxHlSymParameter cxxTypeAlias
+" hi default link LspCxxHlSymFunction cxxFunction
+" hi default link LspCxxHlSymFunctionParameter cxxParameter
+" hi default link LspCxxHlSymFileVariableStatic cxxFileVariableStatic
+" hi default link LspCxxHlSymStruct cxxStruct
+" hi default link LspCxxHlSymStructField cxxStructField
+" hi default link LspCxxHlSymFileTypeAlias cxxTypeAlias
+" hi default link LspCxxHlSymClassField cxxStructField
+" hi default link LspCxxHlSymEnum cxxEnum
+" hi default link LspCxxHlSymVariableExtern cxxFileVariableStatic
+" hi default link LspCxxHlSymVariable cxxVariable
+" hi default link LspCxxHlSymMacro cxxMacro
+" hi default link LspCxxHlSymEnumMember cxxEnumMember
+" hi default link LspCxxHlSymParameter cxxParameter
+" hi default link LspCxxHlSymParameter cxxTypeAlias
 
 
 " ======Coc.nvimSet=======
@@ -332,7 +332,8 @@ let g:coc_global_extensions = [
 \ 'coc-cmake',
 \ 'coc-pyright',
 \ 'coc-json',
-\ 'coc-prettier'
+\ 'coc-prettier',
+\ 'coc-marketplace'
 \]
 
 
