@@ -143,3 +143,7 @@ for file in ~/.{bash_prompt,bash_aliases,functions,path,dockerfunc,extra,exports
 done
 unset file
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

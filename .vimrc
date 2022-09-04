@@ -96,7 +96,7 @@ set signcolumn=yes
 
 " Open file remember history status
 if has("autocmd")
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"zz" | endif
 endif
 
 
@@ -158,10 +158,10 @@ noremap <silent> W 5k
 " B/J keys for 5 times b/w (faster navigation)
 noremap <silent> B 5b
 noremap <silent> J 5w
-" N key: go to the start of the line
-" noremap <silent> N 0
-" I key: go to the end of the line
-noremap <silent><nowait> <space>I $
+" <space>h : go to the start of the line
+noremap <silent><nowait> <space>h ^
+" <space>l : go to the end of the line
+noremap <silent><nowait> <space>l $
 
 
 " =============
@@ -169,11 +169,18 @@ noremap <silent><nowait> <space>I $
 " =============
 
 
-if empty(glob('~/.vim/bundle/Vundle.vim'))
-	:exe 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim'
-	an VimEnter * PluginInstal --sync | source $MYVIMRC
-endif 
+" use Vundle to mangae 
+"if empty(glob('~/.vim/bundle/Vundle.vim'))
+"	silent execute 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim'
+"	an VimEnter * PluginInstall --sync | source $MYVIMRC
+"endif 
 
+" use vim-plug to manage
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 " =============
 " PluginBegin
@@ -184,68 +191,85 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-" call vundle#begin('~/some/path/here')
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Make sure you use single quotes
+
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+
+" Any valid git URL is allowed
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+" Multiple Plug commands can be written in a single line using | separators
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Using a non-default branch
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+Plug 'fatih/vim-go', { 'tag': '*' }
+
+" Plugin options
+Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Unmanaged plugin (manually installed and updated)
+Plug '~/my-prototype-plugin'
 
 " use git in vim
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " git diff in vim
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 
 " file explore
-Plugin 'preservim/nerdtree'
+Plug 'preservim/nerdtree'
 
 " highlight
-Plugin 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
-Plugin 'L9'
+Plug 'vim-scripts/L9'
 
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
+Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 "auto complete pairs
-Plugin 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 
-"Plugin 'Valloric/Youcompleteme'
+"Plug 'Valloric/Youcompleteme'
 
-" lsp and completion
-Plugin 'neoclide/coc.nvim'
+" lsp and completion, build from source
+Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
 
 " statusline profile
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
-" static
-Plugin 'wakatime/vim-wakatime'
+" vim time statistics
+Plug 'wakatime/vim-wakatime'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-" filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+" You can revert the settings after the call like so:
+"   filetype indent off   " Disable file-type-specific indentation
+"   syntax off            " Disable syntax highlighting
 
 
 " ================
@@ -333,8 +357,10 @@ let g:coc_global_extensions = [
 \ 'coc-pyright',
 \ 'coc-json',
 \ 'coc-prettier',
-\ 'coc-marketplace'
+\ 'coc-marketplace',
+\ 'coc-highlight'
 \]
+let g:coc_disable_startup_warning = 1
 
 
 " Trigger negiative
