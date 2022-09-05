@@ -21,7 +21,7 @@ set mouse=a
 " Disable noerrorbells
 set noerrorbells visualbell t_vb=
 " Highlight the line currently under cursor.
-set cursorline
+" set cursorline
 " enable hightlight searching
 set hlsearch
 " See ":help leader" for more information.
@@ -359,7 +359,9 @@ nnoremap <C-f> :NERDTreeFind<CR>
 
 
 " Coc extensions
+" ccls need to installl from github instaed of nom(in coc )
 let g:coc_global_extensions = [
+\ 'coc-clangd', 
 \ 'coc-vimlsp',
 \ 'coc-sh',
 \ 'coc-cmake',
@@ -372,29 +374,32 @@ let g:coc_global_extensions = [
 
 
 " Add this to avoid version message
- let g:coc_disable_startup_warning = 1
+" or just update to new vim version with
+" sudo add-apt-repository -r ppa:jonathonf/vim (this to update cache in apt)
+" sudo apt-get install vim
+ "let g:coc_disable_startup_warning = 1
 
 
-" Trigger negiative
+" Trigger negiative in suggent pop menu
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-inoremap <silent><expr> <C-x><C-z> coc#pum#visible() ? coc#pum#stop() : "\<C-x>\<C-z>"
-" remap for complete to use tab and <cr>
 inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1):
-      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-inoremap <silent><expr> <c-space> coc#refresh()
 
-hi CocSearch ctermfg=12 guifg=#18A3FF
-hi CocMenuSel ctermbg=109 guibg=#13354A
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline(',')[col-1] =~# '\s'
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 
@@ -404,11 +409,6 @@ if has('nvim')
 else 
 	inoremap <silent><expr> <c-@> coc#refersh()
 endif
-
-
-" Use <CR> auto select the first completion item
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-		\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"  
 
 
 " Diagnostic info and navigation
@@ -500,6 +500,13 @@ nnoremap <silent><nowait> <space>n  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>r  :<C-u>CocListResume<CR>
+
+"====================Use for coc-marketplace================
+
+
+" :CocList marketplace list all available extensions
+" :CocList marketplace python to search extension that name contains python
+" You can "Tab" on an extension to do install, uninstall, homepage actions.
 
 
 " a function to generate compile command to .vscode
