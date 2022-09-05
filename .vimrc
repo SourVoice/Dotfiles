@@ -105,6 +105,9 @@ endif
 " =============
 
 
+" unbind key
+
+
 " set 'jj' into normal mod
 inoremap jj <esc>
 
@@ -360,18 +363,25 @@ let g:coc_global_extensions = [
 \ 'coc-marketplace',
 \ 'coc-highlight'
 \]
-let g:coc_disable_startup_warning = 1
+" let g:coc_disable_startup_warning = 1
 
 
 " Trigger negiative
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap  <silent><expr><TAB>
-			\ pumvisible() ? "\<C-n>":
-			\ <SID>check_back_space() ? "\<TAB>":
-			\ coc#refersh()
-inoremap  <expr><S-TAB> 
-			\ pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <C-x><C-z> coc#pum#visible() ? coc#pum#stop() : "\<C-x>\<C-z>"
+" remap for complete to use tab and <cr>
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <c-space> coc#refresh()
+
+hi CocSearch ctermfg=12 guifg=#18A3FF
+hi CocMenuSel ctermbg=109 guibg=#13354A
+
 
 function! s:check_back_space() abort
 	let col = col('.') - 1
@@ -524,6 +534,13 @@ nnoremap <leader>gf :GitGutterFold<CR>
 nnoremap <leader>gd :GitGutterPreviewHunk<CR>
 nnoremap <leader>g- :GitGutterPrevHunk<CR>
 nnoremap <leader>g= :GitGutterNextHunk<CR>
+
+
+" ====================ultisnips=====================
+
+let g:UltiSnipsExpandTrigger="<C-tab>"
+let g:UltiSnipsJumpForwardTrigger="<C-b>"
+let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
 
 " ====================vim-fugitive=====================
