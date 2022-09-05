@@ -100,12 +100,18 @@ if has("autocmd")
 endif
 
 
+
+
 " =============
 " KeyBinding
 " =============
 
 
-" unbind key
+" unbind keys
+map <C-a> <Nop>
+map <C-x> <Nop>
+nmap Q <Nop>
+" nmap R <Nop>
 
 
 " set 'jj' into normal mod
@@ -162,9 +168,9 @@ noremap <silent> W 5k
 noremap <silent> B 5b
 noremap <silent> J 5w
 " <space>h : go to the start of the line
-noremap <silent><nowait> <space>h ^
+noremap <silent><nowait> <C-h> ^
 " <space>l : go to the end of the line
-noremap <silent><nowait> <space>l $
+noremap <silent><nowait> <C-l> $
 
 
 " =============
@@ -363,7 +369,10 @@ let g:coc_global_extensions = [
 \ 'coc-marketplace',
 \ 'coc-highlight'
 \]
-" let g:coc_disable_startup_warning = 1
+
+
+" Add this to avoid version message
+ let g:coc_disable_startup_warning = 1
 
 
 " Trigger negiative
