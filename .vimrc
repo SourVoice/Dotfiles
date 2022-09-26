@@ -100,8 +100,6 @@ if has("autocmd")
 endif
 
 
-
-
 " =============
 " KeyBinding
 " =============
@@ -339,27 +337,28 @@ nnoremap <C-f> :NERDTreeFind<CR>
 " ====== vim-lsp-cxx-highlight======
 
 
-" hi default link LspCxxHlSymFunction cxxFunction
-" hi default link LspCxxHlSymFunctionParameter cxxParameter
-" hi default link LspCxxHlSymFileVariableStatic cxxFileVariableStatic
-" hi default link LspCxxHlSymStruct cxxStruct
-" hi default link LspCxxHlSymStructField cxxStructField
-" hi default link LspCxxHlSymFileTypeAlias cxxTypeAlias
-" hi default link LspCxxHlSymClassField cxxStructField
-" hi default link LspCxxHlSymEnum cxxEnum
-" hi default link LspCxxHlSymVariableExtern cxxFileVariableStatic
-" hi default link LspCxxHlSymVariable cxxVariable
-" hi default link LspCxxHlSymMacro cxxMacro
-" hi default link LspCxxHlSymEnumMember cxxEnumMember
-" hi default link LspCxxHlSymParameter cxxParameter
-" hi default link LspCxxHlSymParameter cxxTypeAlias
+hi default link LspCxxHlSymFunction cxxFunction
+hi default link LspCxxHlSymFunctionParameter cxxParameter
+hi default link LspCxxHlSymFileVariableStatic cxxFileVariableStatic
+hi default link LspCxxHlSymStruct cxxStruct
+hi default link LspCxxHlSymStructField cxxStructField
+hi default link LspCxxHlSymFileTypeAlias cxxTypeAlias
+hi default link LspCxxHlSymClassField cxxStructField
+hi default link LspCxxHlSymEnum cxxEnum
+hi default link LspCxxHlSymVariableExtern cxxFileVariableStatic
+hi default link LspCxxHlSymVariable cxxVariable
+hi default link LspCxxHlSymMacro cxxMacro
+hi default link LspCxxHlSymEnumMember cxxEnumMember
+hi default link LspCxxHlSymParameter cxxParameter
+hi default link LspCxxHlSymParameter cxxTypeAlias
 
 
 " ======Coc.nvimSet=======
 
 
+" Coc need the newest nodejs and npm, some extensions need yarn to get packed
 " Coc extensions
-" ccls need to installl from github instaed of nom(in coc )
+" ccls need to installl from github instaed of npm(use: sudo apt-get install ccls)
 let g:coc_global_extensions = [
 \ 'coc-clangd', 
 \ 'coc-vimlsp',
