@@ -29,13 +29,7 @@
     "default": "\uf29c"
   },
   "coc.preferences.extensionUpdateCheck": "weekly",
-  "coc.preferences.formatOnSaveFiletypes": [
-    "json",
-    "c",
-    "cpp",
-    "css",
-    "markdown"
-  ],
+  "coc.preferences.formatOnSaveFiletypes": ["json", "css", "markdown"],
   "cmake.formatter": "cmake-format",
   "languageserver": {
     "ccls": {
@@ -49,7 +43,7 @@
         ".vscode/"
       ],
       "initializationOptions": {
-        "highlight": { "isRanges": true },
+        "highlight": { "lsRanges": true },
         "cache": {
           "directory": "/tmp/ccls"
         },
