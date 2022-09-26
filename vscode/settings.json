@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "types.h": "c",
+        "user.h": "c",
+        "stat.h": "c",
+        "typeinfo": "c"
+    },
+    "files.encoding": "utf8",
+    "C_Cpp.intelliSenseEngineFallback": "Enabled"
+}
