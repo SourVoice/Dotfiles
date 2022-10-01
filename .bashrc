@@ -146,12 +146,22 @@ export NVS_HOME="$HOME/.nvs"
 [ -s "$NVS_HOME/nvs.sh" ] && . "$NVS_HOME/nvs.sh"
 
 
+# Install wakatime plugin for bash
+if [ -f ~/.bash-wakatime ]; then
+	. ~/.bash-wakatime
+else
+	python3 -c "$(wget -q -O - https://raw.githubusercontent.com/wakatime/vim-wakatime/master/scripts/install_cli.py)"
+	git clone https://github.com/gjsheep/bash-wakatime.git ~/bash-wakatime
+	cp ~/bash-wakatime/bash-wakatime.sh ~/.bash-wakatime
+	rm -rf ~/bash-wakatime
+fi
+
 
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, bash_prompt, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 # We do this before the following so that all the paths work.
-for file in ~/.{bash_aliases,functions,path,dockerfunc,extra,exports,git-prompt}; do
+for file in ~/.{bash_aliases,functions,path,dockerfunc,extra,exports,git-prompt,bash-wakatime}; do
 	if [[ -r "$file"  ]] && [[ -f "$file"  ]]; then
 		# shellcheck source=/dev/null
 		source "$file"
