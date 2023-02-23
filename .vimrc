@@ -9,6 +9,8 @@ set number
 set relativenumber
 " will not carrage return when line within symbol below
 set iskeyword+=_,$,@,%,#,-,/
+" switch no line wrap
+set nowrap
 
 " shift and tab setting
 set tabstop=4
@@ -98,6 +100,10 @@ set signcolumn=yes
 if has("autocmd")
 	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"zz" | endif
 endif
+
+" Popup menu color, see :help hi /PmenuSel
+" colors ron
+" hi PmenuSul ctermbg=LightRed
 
 
 " =============
@@ -479,7 +485,7 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocActionAsync('runCommand','editor.action.organizeImport')"
 
 
-" ==========================Mappings for CoCList===========================
+" ==========================Mappings for CocList===========================
 " Open CocList
 nnoremap <silent> <space>g :<C-u>CocList --normal gstatus<CR>
 
@@ -518,6 +524,14 @@ function! s:generate_compile_commands()
 				\ -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -S . -B .vscode'
 endfunction
 command! -nargs=0 Gcmake :call s:generate_compile_commands()
+
+
+" ======Custom Coc Settings=======
+highlight CocFloating ctermbg=White guifg=#1e1e1e
+" highlight CocInlayhint ctermfg=Red ctermbg=White guifg=#15aabf
+" set no bg color
+highlight CocInlayhint ctermfg=White ctermbg=0 guifg=#15aabf
+" use <C-j>\<C-k> to taggle betweent argument after auto completion
 
 
 " ======vim-airline=======
