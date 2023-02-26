@@ -13,7 +13,7 @@ fi
 # Clone dotfiles repository
 if [ ! -d "$dotfiles_dir"  ]
 then
-  git clone https://github.com//dotfiles.git $dotfiles_dir || {
+  git clone https://github.com/SourVoice/dotfiles.git $dotfiles_dir || {
     echo "Error: Failed to clone dotfiles repository. Please check your internet connection and try again."
     exit 1
   }
