@@ -2,12 +2,12 @@
 
 dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo -n "Creating $olddir for backup of any existing dotfiles in ~ ..."
+echo "Creating $olddir for backup of any existing dotfiles in ~ ..."
 olddir=~/dotfiles_old
 mkdir -p $olddir
-echo -n "done"
+echo "done"
 
-echo -n "Check and Update vim version.."
+echo   "Check and Update vim version.."
 vim_version=$(vim --version | grep -oP "Vi IMproved \K[0-9]+")
 if (( $vim_version < 8 )); then
   # Update package cache
@@ -17,31 +17,47 @@ if (( $vim_version < 8 )); then
   # Install Vim
   sudo apt-get install vim
 fi
-echo -n "done"
+echo "done"
 
-echo -n "Check and Install nodejs for coc.nvim plug..."
+echo "Check and Install nodejs for coc.nvim plug..."
 if ! command -v node &> /dev/null
 then
-  # if 
+  # If Node.js is not installed, install it
+  echo "Node.js is not installed, install it..."
   curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
   sudo apt-get install -y nodejs
 else
+  # If Node.js is already installed, check the version
+  echo "Node.js is already installed, check the version..."
   CURRENT_NODE_VERSION=($node -v)
   REQUIRED_NODE_VERSION="v14.0.0"
-  if [[ "$CURRENT_NODE_VERSION" != "$REQUIRED_NODE_VERSION"]]
+  if [[ "$CURRENT_NODE_VERSION" != "$REQUIRED_NODE_VERSION" ]];
   then
 	# If the installed version of Node.js is not the required version, update it
+	echo "the installed version of Node.js is not the required version, update it"
 	curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 	sudo apt-get install -y nodejs
   fi
 fi
-echo -n "done"
+echo "done"
 
 
-files=$(find . -type f -o -type d)
+# files=$(find . -type f -o -type d)
+files= (
+	.vim
+	vscode
+	.bash_profile
+	.bash_prompt
+	.bashrc
+	.gitconfig
+	.vimrc
+	.tmux.conf
+	.zshrc	
+	install.sh
+)
 
 
-echo -n "Create symlinks in the home directory"
+echo "Create symlinks in the home directory..."
 # Create symlinks in the home directory
 
 for file in "${files[@]}"; do
@@ -57,6 +73,12 @@ for file in "${files[@]}"; do
   echo "Creating symlink: $source_file -> $dest_file"
   ln -s "$source_file" "$dest_file"
 done
-echo -n "done"
+echo "done"
 
+echo "Source the new BASH_SOURCE file..."
 source $HOME/.bashrc
+echo "done"
+echo "Dotfiles installation complete."
+echo "Now open vim to start initial vim."
+
+
