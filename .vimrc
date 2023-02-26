@@ -267,8 +267,8 @@ Plug 'jiangmiao/auto-pairs'
 
 "Plug 'Valloric/Youcompleteme'
 
-" lsp and completion, build from source
-Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
+" lsp and completion, use the branch release
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " statusline profile
 Plug 'vim-airline/vim-airline'
