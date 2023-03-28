@@ -118,6 +118,7 @@ nmap Q <Nop>
 " nmap R <Nop>
 
 
+" back to normal mod
 " set 'jj' into normal mod
 inoremap jj <esc>
 
@@ -136,10 +137,10 @@ nnoremap <silent> <space>j <C-w>j
 nnoremap <silent> <space>k <C-w>k
 
 " Resize split screen
-nmap <leader>j :res +5<CR>
-nmap <leader>k :res -5<CR>
-nmap <leader>l :vertical res-5<CR>
-nmap <leader>h :vertical res+5<CR>
+nmap <silent><nowait> <leader>j :res +5<CR>
+nmap <silent><nowait> <leader>k :res -5<CR>
+nmap <silent><nowait> <leader>l :vertical res-5<CR>
+nmap <silent><nowait> <leader>h :vertical res+5<CR>
 
 " split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
 noremap <leader>u :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
@@ -169,8 +170,8 @@ noremap tc <C-w>c
 noremap <silent> E 5j
 noremap <silent> W 5k
 " B/J keys for 5 times b/w (faster navigation)
-noremap <silent> B 5b
-noremap <silent> J 5w
+" noremap <silent> B 5b
+" noremap <silent> J 5w
 " <space>h : go to the start of the line
 noremap <silent><nowait> <C-h> ^
 " <space>l : go to the end of the line
@@ -225,6 +226,7 @@ Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
+" file explore
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
@@ -249,11 +251,16 @@ Plug 'tpope/vim-fugitive'
 " git diff in vim
 Plug 'airblade/vim-gitgutter'
 
-" file explore
-Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+
+" icon for nerdtree
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " highlight
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+
+" nerd tree highlight
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plug 'vim-scripts/L9'
@@ -339,6 +346,88 @@ nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
+set termencoding=utf-8   
+set fileencoding=chinese 
+set fileencodings=ucs-bom,utf-8,chinese   
+set langmenu=zh_CN.utf-8  
+"" autocmd vimenter * NERDTree  "自动开启Nerdtree
+"" let g:NERDTreeWinSize = 25 "设定 NERDTree 视窗大小
+" 开启/关闭nerdtree快捷键
+" map <F5> :NERDTreeToggle<CR>
+" 打开vim时如果没有文件自动打开NERDTree
+" autocmd vimenter * if !argc()|NERDTree|endif
+" 当NERDTree为剩下的唯一窗口时自动关闭
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeHidden=0     "不显示隐藏文件
+"let NERDTreeMinimalUI = 1
+"let NERDTreeDirArrows = 1
+
+
+" ============vim-devicons============
+
+
+set encoding=UTF-8
+let g:webdevicons_enable_nerdtree = 1
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:webdevicons_enable_airline_tabline = 1
+let g:webdevicons_enable_airline_statusline = 1
+
+
+" ==================vim-nerdtree-syntax-highlight==================
+
+
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+let g:NERDTreeHighlightFolders = 1
+let g:NERDTreeHighlightFoldersFullName = 1
+let s:brown = "905532"
+let s:aqua =  "3AFFDB"
+let s:blue = "689FB6"
+let s:darkBlue = "44788E"
+let s:purple = "834F79"
+let s:lightPurple = "834F79"
+let s:red = "AE403F"
+let s:beige = "F5C06F"
+let s:yellow = "F09F17"
+let s:orange = "D4843E"
+let s:darkOrange = "F16529"
+let s:pink = "CB6F6F"
+let s:salmon = "EE6E73"
+let s:green = "8FAA54"
+let s:Turquoise = "40E0D0"
+let s:lightGreen = "31B53E"
+let s:white = "FFFFFF"
+let s:rspec_red = "FE405F"
+let s:git_orange = "F54D27"
+let s:gray = "808A87"
+let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreeExtensionHighlightColor['o'] = s:gray " sets the color of o files to blue
+let g:NERDTreeExtensionHighlightColor['h'] = s:blue " sets the color of h files to blue
+let g:NERDTreeExtensionHighlightColor['c'] = s:green " sets the color of c files to blue
+let g:NERDTreeExtensionHighlightColor['cpp'] = s:green " sets the color of cpp files to blue
+let g:NERDTreeExtensionHighlightColor['c++'] = s:green
+
+
+" ================nerdtree-git-plugin===================
+
+
+let g:NERDTreeGitStatusIgnored = 1
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+			\ "Modified"  : "✹",
+			\ "Staged"    : "✚",
+			\ "Untracked" : "✭",
+			\ "Renamed"   : "➜",
+			\ "Unmerged"  : "═",
+			\ "Deleted"   : "✖",
+			\ "Dirty"     : "✗",
+			\ "Clean"     : "✔︎",
+			\ 'Ignored'   : '☒',
+			\ "Unknown"   : "?"
+			\ }
+
 
 " ====== vim-lsp-cxx-highlight======
 
@@ -382,7 +471,7 @@ let g:coc_global_extensions = [
 " or just update to new vim version with
 " sudo add-apt-repository -r ppa:jonathonf/vim (this to update cache in apt)
 " sudo apt-get install vim
- "let g:coc_disable_startup_warning = 1
+" let g:coc_disable_startup_warning = 1
 
 
 " Trigger negiative in suggent pop menu
@@ -513,6 +602,9 @@ nnoremap <silent><nowait> <space>r  :<C-u>CocListResume<CR>
 " :CocList marketplace python to search extension that name contains python
 " You can "Tab" on an extension to do install, uninstall, homepage actions.
 
+"==========
+" help function for autocomplicate in vscode
+"==========
 
 " a function to generate compile command to .vscode
 function! s:generate_compile_commands()
@@ -527,7 +619,7 @@ command! -nargs=0 Gcmake :call s:generate_compile_commands()
 
 
 " ======Custom Coc Settings=======
-highlight CocFloating ctermbg=White guifg=#1e1e1e
+ highlight CocFloating ctermbg=Black guifg=#1e1e1e
 " highlight CocInlayhint ctermfg=Red ctermbg=White guifg=#15aabf
 " set no bg color
 highlight CocInlayhint ctermfg=White ctermbg=0 guifg=#15aabf
@@ -538,7 +630,7 @@ highlight CocInlayhint ctermfg=White ctermbg=0 guifg=#15aabf
 
 
 let g:airline_section_z="%p%%"
-let g:airline_theme='angr'
+let g:airline_theme='qwq'
 
 let g:airline#extensions#coc#enabled = 0
 let airline#extensions#coc#error_symbol = 'Error:'
