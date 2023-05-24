@@ -1,4 +1,5 @@
 {
+  "inlayHint.display": false,
   "suggest.labelMaxLength": 80,
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de",
@@ -32,36 +33,36 @@
   "coc.preferences.formatOnSaveFiletypes": ["json", "css", "markdown"],
   "cmake.formatter": "cmake-format",
   "languageserver": {
-    "ccls": {
-      "command": "ccls",
-      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
-      "rootPatterns": [
-        ".ccls",
-        "compile_commands.json",
-        ".git/",
-        ".hg/",
-        ".vscode/"
-      ],
-      "initializationOptions": {
-        "highlight": { "lsRanges": true },
-        "cache": {
-          "directory": "/tmp/ccls"
-        },
-        "clang": {
-          "resourceDir": "/usr/lib/clang/14.0.0"
-        },
-        "completion": {
-          "detailedLable": true,
-          "placeholer": true
-        },
-        "index": {
-          "onChange": false,
-          "initialNoLinkage": true,
-          "threads": 2
-        },
-        "compilationDatabaseDirectory": "./.vscode/"
-      }
-    },
+    //   "ccls": {
+    //     "command": "ccls",
+    //     "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+    //     "rootPatterns": [
+    //       ".ccls",
+    //       "compile_commands.json",
+    //       ".git/",
+    //       ".hg/",
+    //       ".vscode/"
+    //     ],
+    //     "initializationOptions": {
+    //       "highlight": { "lsRanges": true },
+    //       "cache": {
+    //         "directory": "/tmp/ccls"
+    //       },
+    //       "clang": {
+    //         "resourceDir": "/usr/lib/clang/14.0.0"
+    //       },
+    //       "completion": {
+    //         "detailedLable": true,
+    //         "placeholer": true
+    //       },
+    //       "index": {
+    //         "onChange": false,
+    //         "initialNoLinkage": true,
+    //         "threads": 2
+    //       },
+    //       "compilationDatabaseDirectory": "./.vscode/"
+    //     }
+    //   },
     "cmake": {
       "command": "cmake-language-server",
       "filetypes": ["cmake"],

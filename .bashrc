@@ -170,6 +170,8 @@ for file in ~/.{bash_aliases,functions,path,dockerfunc,extra,exports,git-prompt,
 	fi
 done
 unset file
+# source ~/.bash-wakatime.sh
+
 
 
 [ -f ~/.fzf.bash  ] && source ~/.fzf.bash

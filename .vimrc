@@ -16,7 +16,7 @@ set nowrap
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set noexpandtab
+set expandtab
 
 " Enable mouse support
 set mouse=a
@@ -104,6 +104,23 @@ endif
 " Popup menu color, see :help hi /PmenuSel
 " colors ron
 " hi PmenuSul ctermbg=LightRed
+
+" =====================Customize colors=====================
+func! s:my_colors_setup() abort
+    " this is an example
+    hi Pmenu guibg=#d7e5dc gui=NONE
+    hi PmenuSel guibg=#b7c7b7 gui=NONE
+    hi PmenuSbar guibg=#bcbcbc
+    hi PmenuThumb guibg=#585858
+endfunc
+
+augroup colorscheme_coc_setup | au!
+    au ColorScheme * call s:my_colors_setup()
+augroup END
+
+au ColorScheme * hi! link CocMenuSel PmenuSel
+au ColorScheme * hi! link CocPumMenu Pmenu
+au ColorScheme * hi! link CocPumVirtualText Comment
 
 
 " =============
@@ -236,6 +253,9 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 Plug 'fatih/vim-go', { 'tag': '*' }
 
+" fast commenter 
+Plug 'scrooloose/nerdcommenter'
+
 " Plugin options
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
@@ -341,17 +361,17 @@ call plug#end()
 
 " show hidden file
 let NERDTreeShowHidden=1
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+" nnoremap <C-n> :NERDTree<CR>
+" nnoremap <C-t> :NERDTreeToggle<CR>
+" nnoremap <C-f> :NERDTreeFind<CR>
 
 set termencoding=utf-8   
 set fileencoding=chinese 
 set fileencodings=ucs-bom,utf-8,chinese   
 set langmenu=zh_CN.utf-8  
-"" autocmd vimenter * NERDTree  "自动开启Nerdtree
-"" let g:NERDTreeWinSize = 25 "设定 NERDTree 视窗大小
+autocmd vimenter * NERDTree  "自动开启Nerdtree
+" let g:NERDTreeWinSize = 25 "设定 NERDTree 视窗大小
 " 开启/关闭nerdtree快捷键
 " map <F5> :NERDTreeToggle<CR>
 " 打开vim时如果没有文件自动打开NERDTree
@@ -463,7 +483,8 @@ let g:coc_global_extensions = [
 \ 'coc-json',
 \ 'coc-prettier',
 \ 'coc-marketplace',
-\ 'coc-highlight'
+\ 'coc-highlight',
+\ 'coc-rust-analyzer'
 \]
 
 
@@ -619,10 +640,10 @@ command! -nargs=0 Gcmake :call s:generate_compile_commands()
 
 
 " ======Custom Coc Settings=======
- highlight CocFloating ctermbg=Black guifg=#1e1e1e
+  highlight CocFloating ctermbg=Black guifg=#1e1e1e
 " highlight CocInlayhint ctermfg=Red ctermbg=White guifg=#15aabf
 " set no bg color
-highlight CocInlayhint ctermfg=White ctermbg=0 guifg=#15aabf
+" highlight CocInlayhint ctermfg=White ctermbg=0 guifg=#15aabf
 " use <C-j>\<C-k> to taggle betweent argument after auto completion
 
 
@@ -662,6 +683,13 @@ nnoremap <leader>g= :GitGutterNextHunk<CR>
 let g:UltiSnipsExpandTrigger="<C-tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
+
+
+" ====================nerdcommenter=====================
+
+let NERDSpaceDelims=1           " 让注释符与语句之间留一个空格
+let NERDCompactSexyComs=1       " 多行注释时样子更好看
+let g:NERDDefaultAlign = 'left'  "将行注释符左对齐 
 
 
 " ====================vim-fugitive=====================
