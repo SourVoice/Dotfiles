@@ -9,13 +9,13 @@ echo "done"
 
 echo   "Check and Update vim version.."
 vim_version=$(vim --version | grep -oP "Vi IMproved \K[0-9]+")
-if (( $vim_version < 8 )); then
+if (( $vim_version < 9 )); then
   # Update package cache
   sudo add-apt-repository -r ppa:jonathonf/vim
-  sudo apt-get update
+  sudo apt update
 
   # Install Vim
-  sudo apt-get install vim
+  sudo apt install vim
 fi
 echo "done"
 
@@ -43,7 +43,7 @@ echo "done"
 
 
 # files=$(find . -type f -o -type d)
-files= (
+files=(
 	.vim
 	vscode
 	.bash_profile
