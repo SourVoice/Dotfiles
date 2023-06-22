@@ -7,6 +7,27 @@ olddir=~/dotfiles_old
 mkdir -p $olddir
 echo "done"
 
+# Check and install vim
+if !command -v vim &> /dev/null; then 
+  echo "Install vim..."
+  sudo apt install -y vim
+  echo "Install vim done."
+fi
+
+# Check and install curl
+if !command -v curl &> /dev/null; then 
+  echo "Install curl..."
+  sudo apt install -y curl
+  echo "Install curl done."
+fi
+
+# Check and install python3
+if !command -v curl &> /dev/null; then 
+  echo "Install python3..."
+  sudo apt install -y python3
+  echo "Install python3 done."
+fi
+
 echo   "Check and Update vim version.."
 vim_version=$(vim --version | grep -oP "Vi IMproved \K[0-9]+")
 if (( $vim_version < 9 )); then
