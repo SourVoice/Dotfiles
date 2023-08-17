@@ -123,9 +123,13 @@ au ColorScheme * hi! link CocPumMenu Pmenu
 au ColorScheme * hi! link CocPumVirtualText Comment
 
 
-" =============
-" KeyBinding
-" =============
+" =====================Customize Functions=====================
+
+" use <leader> y to translate 
+nmap <leader>y :!echo --=<C-R><C-w>==-- ;ici <C-R><C-W><CR>
+
+
+" =====================KeyBinding=====================
 
 
 " unbind keys
@@ -186,12 +190,9 @@ noremap tc <C-w>c
 
 noremap <silent> E 5j
 noremap <silent> W 5k
-" B/J keys for 5 times b/w (faster navigation)
-" noremap <silent> B 5b
-" noremap <silent> J 5w
-" <space>h : go to the start of the line
+" <Ctrl-h>: go to the start of the line
 noremap <silent><nowait> <C-h> ^
-" <space>l : go to the end of the line
+" <Ctrl-l>: go to the end of the line
 noremap <silent><nowait> <C-l> $
 
 
@@ -200,26 +201,17 @@ noremap <silent><nowait> <C-l> $
 " =============
 
 
-" use Vundle to mangae 
-"if empty(glob('~/.vim/bundle/Vundle.vim'))
-"	silent execute 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim'
-"	an VimEnter * PluginInstall --sync | source $MYVIMRC
-"endif 
-
-" use vim-plug to manage
+" use vim-plug to manage, install vim-plug
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
 " =============
 " PluginBegin
 " =============
-
-
-set nocompatible              " be iMproved, required
-filetype off                  " required
 
 
 call plug#begin()
@@ -289,10 +281,10 @@ Plug 'vim-scripts/L9'
 " Pass the path to set the runtimepath properly.
 Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
 
-"auto complete pairs
+" auto complete pairs
 Plug 'jiangmiao/auto-pairs'
 
-"Plug 'Valloric/Youcompleteme'
+" Plug 'Valloric/Youcompleteme'
 
 " lsp and completion, use the branch release
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -304,12 +296,15 @@ Plug 'vim-airline/vim-airline-themes'
 " vim time statistics
 Plug 'wakatime/vim-wakatime'
 
+" provides for the visualization, navigation and management of vim's marks
+Plug 'kshenoy/vim-signature'
+
+" much simpler way to use motions 
+Plug 'easymotion/vim-easymotion'
+
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()
-" You can revert the settings after the call like so:
-"   filetype indent off   " Disable file-type-specific indentation
-"   syntax off            " Disable syntax highlighting
 
 
 " ================
@@ -318,42 +313,6 @@ call plug#end()
 
 
 " ======YouComleteSet=====
-
-
-" set completeopt=longest,menu "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
-" autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" "回车即选中当前项
-" "上下左右键的行为 会显示其他信息
-" inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
-" inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
-" inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-" inoremap <expr> <PageUp> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-
-" youcompleteme 默认tab s-tab 和自动补全冲突
-" let g:ycm_key_list_select_completion=['<c-n>']
-" let g:ycm_key_list_select_completion = ['<Tab>', '<Down>']
-" let g:ycm_key_list_previous_completion=['<c-p>']
-"let g:ycm_key_list_previous_completion = ['<S-Tab>', '<Up>']
-"let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
-" close completion menu
-"let g:ycm_key_list_stop_completion = ['<C-y>']
-"let g:ycm_collect_identifiers_from_tags_files=1 " 开启 YCM 基于标签引擎
-"let g:ycm_min_num_of_chars_for_completion=2 " 从第2个键入字符就开始罗列匹配项
-"let g:ycm_cache_omnifunc=0 " 禁止缓存匹配项,每次都重新生成匹配项
-"let g:ycm_seed_identifiers_with_syntax=1 " 语法关键字补全
-" force recomile with syntastic
-"inoremap <F5> :YcmForceCompileAndDiagnostics<CR> 
-" nnoremap <leader>lo :lopen<CR> "open locationlist
-" nnoremap <leader>lc :lclose<CR> "close locationlist
-"inoremap <leader><leader> <C-x><C-o>
-" 在注释输入中也能补全
-"let g:ycm_complete_in_comments = 1
-" 在字符串输入中也能补全
-"let g:ycm_complete_in_strings = 1
-" 注释和字符串中的文字也会被收入补全
-"let g:ycm_collect_identifiers_from_comments_and_strings = 0
-" 跳转到定义处
-"inoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> 
 
 
 " ======NERDTree======
@@ -370,7 +329,11 @@ set termencoding=utf-8
 set fileencoding=chinese 
 set fileencodings=ucs-bom,utf-8,chinese   
 set langmenu=zh_CN.utf-8  
-autocmd vimenter * NERDTree  "自动开启Nerdtree
+"自动开启Nerdtree
+augroup autoNerdtree
+    autocmd vimenter * NERDTree 
+    autocmd vimenter * if (exists("b: NERDTree") && b:NERDTree.isTabTree()) | exe "NERD <space>l" | endif
+augroup END
 " let g:NERDTreeWinSize = 25 "设定 NERDTree 视窗大小
 " 开启/关闭nerdtree快捷键
 " map <F5> :NERDTreeToggle<CR>
@@ -640,7 +603,7 @@ command! -nargs=0 Gcmake :call s:generate_compile_commands()
 
 
 " ======Custom Coc Settings=======
-  highlight CocFloating ctermbg=Black guifg=#1e1e1e
+" highlight CocFloating ctermbg=Black guifg=#1e1e1e
 " highlight CocInlayhint ctermfg=Red ctermbg=White guifg=#15aabf
 " set no bg color
 " highlight CocInlayhint ctermfg=White ctermbg=0 guifg=#15aabf
@@ -686,10 +649,44 @@ let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
 
 " ====================nerdcommenter=====================
+" toggle comments with <leader>c<space>
 
-let NERDSpaceDelims=1           " 让注释符与语句之间留一个空格
-let NERDCompactSexyComs=1       " 多行注释时样子更好看
-let g:NERDDefaultAlign = 'left'  "将行注释符左对齐 
+
+" use leading space, but delete trailing space
+let g:NERDSpaceDelims=1             " 让注释符与语句之间留一个空格
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDCompactSexyComs=1         " 多行注释时样子更好看
+let g:NERDDefaultAlign = 'left'     " 将多行注释符左对齐 
+
+" do not nest by default
+let g:NERDDefaultNesting = 1
+let g:NERDAltDelims_javascript = 0
+" nmap 'c <leader>c
+" xmap 'c <leader>c
+" comment text objects and movements
+nmap <leader>c<down> V<down><plug>NERDCommenterInvert
+nmap <leader>c<up>   V<up><plug>NERDCommenterInvert
+nmap        'c<down> V<down><plug>NERDCommenterComment
+nmap        'c<up>   V<up><plug>NERDCommenterComment
+for mov in ['j', 'k', 'gg', 'G', '(', ')', '{', '}', 'as', 'is', 'ap', 'ip']
+    exe "nmap \<leader\>c" . mov . " V" . mov . "\<plug\>NERDCommenterInvert"
+    exe "nmap 'c"          . mov . " V" . mov . "\<plug\>NERDCommenterComment"
+endfor
+for i in range(1, 50)
+    exe "nmap \<leader\>c" . i . "j        V" . i . "j\<plug\>NERDCommenterInvert"
+    exe "nmap \<leader\>c" . i . "\<down\> V" . i . "j\<plug\>NERDCommenterInvert"
+    exe "nmap \<leader\>c" . i . "k        V" . i . "k\<plug\>NERDCommenterInvert"
+    exe "nmap \<leader\>c" . i . "\<up\>   V" . i . "k\<plug\>NERDCommenterInvert"
+    exe "nmap 'c"          . i . "j        V" . i . "j\<plug\>NERDCommenterComment"
+    exe "nmap 'c"          . i . "\<down\> V" . i . "j\<plug\>NERDCommenterComment"
+    exe "nmap 'c"          . i . "k        V" . i . "k\<plug\>NERDCommenterComment"
+    exe "nmap 'c"          . i . "\<up\>   V" . i . "k\<plug\>NERDCommenterComment"
+endfor
+" duplicate a line and comment out the first one
+nmap <leader>cd <leader>cyp
+" do not comment on new lines (except when already in insert mode)
+nnoremap o o<esc>S
+nnoremap O O<esc>S
 
 
 " ====================vim-fugitive=====================
@@ -709,6 +706,7 @@ let g:NERDDefaultAlign = 'left'  "将行注释符左对齐
 " Or use a more easy way:
 " :windo Gw
 " :Git commit
+
 
 
 

@@ -172,11 +172,17 @@ done
 unset file
 # source ~/.bash-wakatime.sh
 
+bind 'TAB: menu-complete'
+bind 'set show-all-if-ambiguous on'
+
 
 
 [ -f ~/.fzf.bash  ] && source ~/.fzf.bash
 
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. "$HOME/.cargo/env"
+
+export https_proxy=http://10.88.33.188:10809
+export http_proxy=http://10.88.33.188:10809
