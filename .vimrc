@@ -332,7 +332,7 @@ set langmenu=zh_CN.utf-8
 "自动开启Nerdtree
 augroup autoNerdtree
     autocmd vimenter * NERDTree 
-    autocmd vimenter * if (exists("b: NERDTree") && b:NERDTree.isTabTree()) | exe "NERD <space>l" | endif
+    autocmd vimenter * NERDTree | wincmd p
 augroup END
 " let g:NERDTreeWinSize = 25 "设定 NERDTree 视窗大小
 " 开启/关闭nerdtree快捷键
