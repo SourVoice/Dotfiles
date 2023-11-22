@@ -182,7 +182,33 @@ bind 'set show-all-if-ambiguous on'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-. "$HOME/.cargo/env"
+if rustc --version &> /dev/null; then
+    . "$HOME/.cargo/env"
+fi
 
-export https_proxy=http://10.88.33.188:10809
-export http_proxy=http://10.88.33.188:10809
+# set wsl proxy
+# need use this `powershell` in admister in host:
+# New-NetFirewallRule -DisplayName "WSL" -Direction Inbound  -InterfaceAlias "vEthernet (WSL)"  -Action Allow
+if grep -iq wsl /proc/version; then
+    # wsl_ip
+    wsl_ip=$(
+    ip addr | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'
+    )
+
+    # need use the host's ip
+    host_ip=$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " ")
+
+    # for clash
+    # export ALL_PROXY="http://$host_ip:7890"
+
+    # for v2rayN
+    #export https_proxy=http://$host_ip:10809
+    #export http_proxy=http://$host_ip:10809
+    #wsl_ip=$(hostname -I | awk '{print $1}')
+
+    test_proxy(){
+        echo "Host ip: " $(host_ip)
+        echo "WSL ip: " $(wsl_ip)
+        echo "Current proxy: " $https_proxy
+    }
+fi
